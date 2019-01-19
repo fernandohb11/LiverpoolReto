@@ -20,20 +20,6 @@ router.get('/products',(req,res,next)=>{
       .catch(e => res.json(e))
 })
 
-//Update Product
-router.put('/products/:id',(req,res,next)=>{
-  const {id} = req.params
-  Product.findByIdAndUpdate(id,{$set: req.body})
-      .then(response => res.json({message:"This product was updated"}))
-      .catch(e=> res.json(e))
-})
 
-//Delete Product
-router.delete('/products/:id',(req,res,next)=>{
-  const {id} = req.params
-  Product.findByIdAndRemove(id)
-      .then(response => res.json({message: "Product deleted"}))
-      .catch(e=> res.json(e))
-})
 
 module.exports = router
