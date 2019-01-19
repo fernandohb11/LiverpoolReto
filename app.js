@@ -7,7 +7,10 @@ const favicon      = require('serve-favicon');
 const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
-const path         = require('path');
+const path = require('path');
+const passport = require('./middleware/passport')
+const session      = require('express-session')
+const MongoStore = require('connect-mongo')(session)
 
 
 mongoose
@@ -29,6 +32,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  store: new MongoStore({
+    mongooseConnection:mongoose.connection,
+    ttl:24*60*60
+  }),
+  secret: 'liverpoolapp',
+  resave: true,
+  saveUninitialized:true,
+  cookie:{httpOnly:true,maxAge:60000}
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 // Express View engine setup
 
@@ -55,5 +71,7 @@ const index = require('./routes/index');
 app.use('/', index);
 const product = require('./routes/product')
 app.use('/product', product)
+const authRoutes = require('./routes/auth')
+app.use('/api',authRoutes)
 
 module.exports = app;
