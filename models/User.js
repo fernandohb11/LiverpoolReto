@@ -11,6 +11,8 @@ const UserSchema = new Schema({
     updatedAt:'updated_at',
     createdAt:'created_at'
   }
-})
+  })
 
+UserSchema.plugin(passport,{usernameField:'name'})
 module.exports = mongoose.model('User', UserSchema)
+
