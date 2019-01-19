@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const productSchema = new Schema({
   name: String,
   photoURL: String,
-  price: Number,
+  price: String,
 },{
   timestamps:{
     updatedAt:'updated_at',

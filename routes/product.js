@@ -10,7 +10,7 @@ router.post('/new',(req, res)=>{
 
     }).catch(error=>{
       console.log(error)
-      res.render('product/form',{product:req.body,error})
+     return res.json('product/form',{product:req.body,error})
     })
 })
 //Get all Products
